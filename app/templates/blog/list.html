@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero" style="min-height:40vh;padding-top:140px;">
+  <div class="blueprint-grid"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div class="hero-tag">Our Journal</div>
+    <h1 style="font-size:clamp(48px,7vw,96px);">Blog &amp; News</h1>
+    <p class="hero-desc" style="max-width:500px;">Updates, insights, and project stories from the Rudraksh team.</p>
+  </div>
+</section>
+
+<section style="padding:80px 0 140px;">
+  <div class="wrap">
+    {% if posts %}
+      <div class="blog-grid">
+        {% for post in posts %}
+        <article class="blog-card reveal">
+          <div class="blog-card-image" style="background:linear-gradient(160deg,{% if loop.index is odd %}#2E3B4E,#1B2430{% else %}#8a7048,#4a3a22{% endif %});">
+            <div class="blog-card-date">{{ post.created_at.strftime('%d %b %Y') }}</div>
+          </div>
+          <div class="blog-card-body">
+            <h3><a href="{{ url_for('blog.post', slug=post.slug) }}">{{ post.title }}</a></h3>
+            <p>{{ post.excerpt or post.content[:150] | striptags }}...</p>
+            <div class="blog-card-meta">
+              <span>{{ post.author }}</span>
+              <a href="{{ url_for('blog.post', slug=post.slug) }}">Read More →</a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="text-align:center;padding:80px 0;color:var(--steel-soft);">
+        <p style="font-size:20px;">No blog posts yet.</p>
+        <p>Check back soon for updates.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.blog-card{border:1px solid var(--line);background:var(--white);transition:transform .3s ease;}
+.blog-card:hover{transform:translateY(-6px);}
+.blog-card-image{height:200px;display:flex;align-items:flex-end;padding:18px;position:relative;}
+.blog-card-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--paper);letter-spacing:0.1em;}
+.blog-card-body{padding:24px;}
+.blog-card-body h3{font-size:18px;margin-bottom:10px;}
+.blog-card-body h3 a{color:var(--ink);}
+.blog-card-body h3 a:hover{color:var(--brass);}
+.blog-card-body p{color:var(--steel);font-size:14px;line-height:1.6;margin-bottom:16px;}
+.blog-card-meta{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel-soft);}
+.blog-card-meta a{color:var(--brass);}
+@media (max-width:900px){.blog-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.blog-grid{grid-template-columns:1fr;}}
+</style>
+{% endblock %}

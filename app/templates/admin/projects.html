@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Projects</h1>
+  <a href="{{ url_for('admin.project_new') }}" class="btn btn-primary">+ New Project</a>
+</div>
+<table class="admin-table">
+  <thead>
+    <tr><th>Title</th><th>Category</th><th>Year</th><th>Featured</th><th>Order</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {% for p in projects %}
+    <tr>
+      <td>{{ p.title }}</td>
+      <td>{{ p.category }}</td>
+      <td>{{ p.year }}</td>
+      <td>{% if p.featured %}&#10003;{% endif %}</td>
+      <td>{{ p.order }}</td>
+      <td class="actions">
+        <a href="{{ url_for('admin.project_edit', id=p.id) }}" class="btn-sm">Edit</a>
+        <form method="POST" action="{{ url_for('admin.project_delete', id=p.id) }}" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn-sm danger" onclick="return confirm('Delete this project?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

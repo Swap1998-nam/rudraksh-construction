@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ settings.get('site_name', 'Rudraksh Construction') }} — Building With Precision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <span class="name">RUDRAKSH</span>
+      <span class="sub">CONSTRUCTION CO.</span>
+    </div>
+    <nav>
+      <ul id="navList">
+        <li><a href="{{ url_for('main.index') }}#about">About</a></li>
+        <li><a href="{{ url_for('main.index') }}#engineer">Engineer</a></li>
+        <li><a href="{{ url_for('main.index') }}#services">Services</a></li>
+        <li><a href="{{ url_for('main.index') }}#gallery">Gallery</a></li>
+        <li><a href="{{ url_for('blog.list') }}">Blog</a></li>
+        <li><a href="{{ url_for('main.index') }}#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="{{ url_for('main.index') }}#contact" class="nav-cta">Get A Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="mono">&copy; 2026 {{ settings.get('site_name', 'RUDRAKSH CONSTRUCTION CO.') }}</div>
+    <div class="foot-links">
+      <a href="{{ url_for('main.index') }}#about">About</a>
+      <a href="{{ url_for('main.index') }}#services">Services</a>
+      <a href="{{ url_for('main.index') }}#gallery">Gallery</a>
+      <a href="{{ url_for('blog.list') }}">Blog</a>
+      <a href="{{ url_for('main.index') }}#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {{ messages[0][1] }}
+    {% else %}
+      Message sent — we will get back to you shortly.
+    {% endif %}
+  {% endwith %}
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

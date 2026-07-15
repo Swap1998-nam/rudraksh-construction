@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Dashboard</h1>
+</div>
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-num">{{ project_count }}</div>
+    <div class="stat-lbl">Projects</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ service_count }}</div>
+    <div class="stat-lbl">Services</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ team_count }}</div>
+    <div class="stat-lbl">Team Members</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ blog_count }}</div>
+    <div class="stat-lbl">Blog Posts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ message_count }}</div>
+    <div class="stat-lbl">Messages</div>
+  </div>
+  <div class="stat-card {% if unread_messages > 0 %}warning{% endif %}">
+    <div class="stat-num">{{ unread_messages }}</div>
+    <div class="stat-lbl">Unread Messages</div>
+  </div>
+</div>
+
+<h2 style="margin-top:40px;font-size:18px;">Recent Messages</h2>
+<table class="admin-table">
+  <thead>
+    <tr><th>Name</th><th>Email</th><th>Type</th><th>Date</th><th>Status</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for msg in recent_messages %}
+    <tr>
+      <td>{{ msg.name }}</td>
+      <td>{{ msg.email }}</td>
+      <td>{{ msg.project_type }}</td>
+      <td>{{ msg.created_at.strftime('%d-%m-%Y') }}</td>
+      <td>{% if msg.is_read %}<span class="badge">Read</span>{% else %}<span class="badge unread">Unread</span>{% endif %}</td>
+      <td><a href="{{ url_for('admin.message_read', id=msg.id) }}" class="btn-sm">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

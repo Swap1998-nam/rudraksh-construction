@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="blueprint-grid"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="hero-tag">EST. 2016 — Belgavi, KARNATAKA</div>
+      <h1>BUILT ON<br><span class="line2">PRECISION.</span></h1>
+      <p class="hero-desc">Rudraksh Construction plans, engineers, and delivers residential, commercial, and industrial structures — every measurement checked, every deadline held.</p>
+      <div class="hero-cta-row">
+        <a href="#gallery" class="btn btn-solid">View Our Work →</a>
+        <a href="#contact" class="btn btn-ghost">Request A Quote</a>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div><strong>{{ years_active }}+</strong>Years in practice</div>
+      <div><strong>{{ project_count }}+</strong>Projects delivered</div>
+    </div>
+  </div>
+  <div class="measure-strip">
+    <div class="track mono">
+      <span>RESIDENTIAL</span><span>COMMERCIAL</span><span>INDUSTRIAL</span><span>STRUCTURAL ENGINEERING</span><span>RENOVATION</span><span>PROJECT MANAGEMENT</span>
+      <span>RESIDENTIAL</span><span>COMMERCIAL</span><span>INDUSTRIAL</span><span>STRUCTURAL ENGINEERING</span><span>RENOVATION</span><span>PROJECT MANAGEMENT</span>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">The Company</div>
+        <h2>Who We Are</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p>Rudraksh Construction is a full-service building company delivering ground-up construction, renovation, and structural engineering across residential and commercial sectors.</p>
+        <p>We hold every project to one standard: measured, engineered, and finished exactly to spec. From the first site survey to the final walkthrough, our teams coordinate design, structure, and execution under one roof — so nothing gets lost in translation between the drawing and the build.</p>
+        <p>Registered and operating in Karnataka, we bring precision, safety, and accountability to every structure we touch.</p>
+      </div>
+      <div class="spec-sheet reveal">
+        <div class="spec-row"><span class="num">{{ years_active }}+</span><span class="lbl">Years of active practice</span></div>
+        <div class="spec-row"><span class="num">{{ project_count }}+</span><span class="lbl">Projects completed to date</span></div>
+        <div class="spec-row"><span class="num">{{ team_count }}+</span><span class="lbl">Engineers &amp; site staff</span></div>
+        <div class="spec-row"><span class="num">0</span><span class="lbl">Lost-time safety incidents, 2024</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="engineer" id="engineer">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Engineer Profile</div>
+        <h2>Lead Structural Engineer</h2>
+      </div>
+    </div>
+    {% set lead = team_members | selectattr("is_lead") | first %}
+    <div class="eng-grid">
+      <div class="id-card reveal">
+        <div class="avatar">
+          {% if lead and lead.image %}
+            <img src="{{ url_for('static', filename='uploads/' + lead.image) }}" alt="{{ lead.name }}" style="width:100%;height:100%;object-fit:cover;">
+          {% else %}
+            <span>{{ lead.name[:1] if lead else 'R' }}</span>
+          {% endif %}
+        </div>
+        <div class="eng-name">{{ lead.name if lead else 'Engineer Name' }}</div>
+        <div class="eng-title">{{ lead.title if lead else 'B.E. Civil · Structural Lead' }}</div>
+        <div class="id-line"><span>License No.</span><span>{{ lead.license_no if lead else 'PLACEHOLDER' }}</span></div>
+        <div class="id-line"><span>Experience</span><span>{{ lead.experience if lead else '12 Years' }}</span></div>
+        <div class="id-line"><span>Registered</span><span>{{ lead.registered_in if lead else 'Karnataka, IN' }}</span></div>
+      </div>
+      <div class="eng-bio reveal">
+        <p>{{ lead.bio if lead else 'Placeholder biography — replace with your lead engineer\'s real background.' }}</p>
+        {% if lead and lead.credentials %}
+        <h3>Credentials</h3>
+        <div class="cred-grid">
+          {% for cred in lead.credentials.split('\n') %}
+            <div class="cred">{{ cred }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">What We Do</div>
+        <h2>Our Services</h2>
+      </div>
+      <p>From first sketch to final handover, we manage every phase of the build in-house.</p>
+    </div>
+    <div class="serv-grid reveal">
+      {% for service in services %}
+      <div class="serv-card">
+        <span class="serv-num">{{ '%02d' % loop.index }}</span>
+        <div class="serv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            {% if service.icon_name == 'building' %}
+            <path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/>
+            {% elif service.icon_name == 'office' %}
+            <path d="M3 21h18M6 21V7l5-4 5 4v14M9 21v-4h4v4"/>
+            {% elif service.icon_name == 'industry' %}
+            <path d="M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15"/>
+            {% elif service.icon_name == 'structure' %}
+            <path d="M12 2l3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 9l6-1z"/>
+            {% elif service.icon_name == 'renovation' %}
+            <path d="M4 4h16v4H4zM6 8v12h12V8M10 12h4v4h-4z"/>
+            {% elif service.icon_name == 'management' %}
+            <path d="M3 12h4l3-8 4 16 3-8h4"/>
+            {% else %}
+            <path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/>
+            {% endif %}
+          </svg>
+        </div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Portfolio</div>
+        <h2>Project Gallery</h2>
+      </div>
+      <p>Our completed work across residential, commercial, and industrial sectors.</p>
+    </div>
+    <div class="filter-row reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="residential">Residential</button>
+      <button class="filter-btn" data-filter="commercial">Commercial</button>
+      <button class="filter-btn" data-filter="industrial">Industrial</button>
+    </div>
+    <div class="gal-grid reveal">
+      {% for project in projects %}
+      <div class="gal-item g{{ (loop.index % 6) + 1 }}" data-cat="{{ project.category }}">
+        <div class="plate">
+          <div class="cap">
+            <div class="tag">{{ project.category | title }} / {{ project.year or 'N/A' }}</div>
+            <div class="title">{{ project.title }}</div>
+            {% if project.location %}
+            <div class="mono" style="font-size:11px;opacity:0.7;">{{ project.location }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap band-grid reveal">
+    <div><div class="band-num">{{ project_count }}+</div><div class="band-lbl">Projects Delivered</div></div>
+    <div><div class="band-num">{{ years_active }}+</div><div class="band-lbl">Years Active</div></div>
+    <div><div class="band-num">100%</div><div class="band-lbl">On-Time Handover</div></div>
+    <div><div class="band-num">{{ team_count }}+</div><div class="band-lbl">Team Members</div></div>
+  </div>
+</div>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Start A Project</div>
+        <h2>Get In Touch</h2>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <form class="reveal" method="POST" action="{{ url_for('main.contact_submit') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field"><label>Full Name</label><input type="text" name="name" required placeholder="Your name"></div>
+        <div class="field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Phone</label><input type="text" name="phone" placeholder="+91 00000 00000"></div>
+        <div class="field"><label>Project Type</label>
+          <select name="project_type">
+            <option>Residential</option>
+            <option>Commercial</option>
+            <option>Industrial</option>
+            <option>Renovation</option>
+          </select>
+        </div>
+        <div class="field"><label>Project Details</label><textarea name="details" rows="4" placeholder="Tell us about your project"></textarea></div>
+        <button type="submit" class="btn btn-solid" style="margin-top:10px;background:var(--brass);border-color:var(--brass);">Submit Request →</button>
+      </form>
+      <div class="contact-info reveal">
+        <div class="row"><div class="k">Office</div><div class="v">{{ settings.get('site_address', 'Placeholder Address, Belgavi, Karnataka, IN') }}</div></div>
+        <div class="row"><div class="k">Phone</div><div class="v">{{ settings.get('site_phone', '+91 00000 00000') }}</div></div>
+        <div class="row"><div class="k">Email</div><div class="v">{{ settings.get('site_email', 'contact@rudrakshconstructions.tech') }}</div></div>
+        <div class="row"><div class="k">Hours</div><div class="v">{{ settings.get('site_hours', 'Mon – Sat, 9:00 AM – 6:00 PM') }}</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>{% if post %}Edit Post{% else %}New Post{% endif %}</h1>
+  <a href="{{ url_for('admin.blog') }}" class="btn">Back</a>
+</div>
+<form method="POST" enctype="multipart/form-data" class="admin-form">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field"><label>Title</label>{{ form.title }}</div>
+  <div class="field"><label>URL Slug</label>{{ form.slug }}</div>
+  <div class="field"><label>Content (HTML allowed)</label>{{ form.content(rows=12) }}</div>
+  <div class="field"><label>Excerpt</label>{{ form.excerpt(rows=3) }}</div>
+  <div class="field"><label>Featured Image</label>{{ form.image }}</div>
+  {% if post and post.image %}
+    <p><small>Current: {{ post.image }}</small></p>
+  {% endif %}
+  <div class="field"><label>Author</label>{{ form.author }}</div>
+  <div class="field checkbox"><label>{{ form.published }} Published</label></div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}
