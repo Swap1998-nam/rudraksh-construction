@@ -14,8 +14,9 @@
 <header>
   <div class="nav">
     <div class="brand">
-      <span class="name">RUDRAKSH</span>
-      <span class="sub">CONSTRUCTION CO.</span>
+      <a href="{{ url_for('main.index') }}">
+        <img src="{{ url_for('static', filename='images/logo-main.png') }}" alt="Rudraksh Construction" class="logo-main">
+      </a>
     </div>
     <nav>
       <ul id="navList">
@@ -36,6 +37,9 @@
 
 <footer>
   <div class="wrap foot-row">
+    <div class="foot-brand">
+      <img src="{{ url_for('static', filename='images/logo-footer.png') }}" alt="Rudraksh Construction" class="logo-footer">
+    </div>
     <div class="mono">&copy; 2026 {{ settings.get('site_name', 'RUDRAKSH CONSTRUCTION CO.') }}</div>
     <div class="foot-links">
       <a href="{{ url_for('main.index') }}#about">About</a>

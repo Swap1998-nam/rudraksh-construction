@@ -81,17 +81,11 @@ header{
   display:flex;align-items:center;justify-content:space-between;
 }
 .brand{
-  display:flex;flex-direction:column;line-height:1;
+  display:flex;align-items:center;line-height:1;
 }
-.brand .name{
-  font-family:'Big Shoulders Display', sans-serif;
-  font-weight:800;font-size:22px;letter-spacing:0.02em;
-}
-.brand .sub{
-  font-family:'IBM Plex Mono', monospace;
-  font-size:9px;letter-spacing:0.25em;color:var(--steel-soft);
-  margin-top:3px;
-}
+.logo-main{height:42px;width:auto;display:block;}
+.logo-footer{height:36px;width:auto;display:block;}
+.foot-brand{display:flex;align-items:center;}
 nav ul{
   display:flex;gap:38px;list-style:none;
 }
@@ -141,7 +135,17 @@ nav ul li a:hover::after{width:100%;}
   padding-top:78px;
   position:relative;
   overflow:hidden;
-  background:linear-gradient(var(--paper) 0%, var(--paper) 100%);
+}
+.hero-video-bg{
+  position:absolute;inset:0;z-index:0;
+  overflow:hidden;
+}
+.hero-video-bg video{
+  width:100%;height:100%;object-fit:cover;
+}
+.hero-video-overlay{
+  position:absolute;inset:0;
+  background:rgba(27,36,48,0.55);
 }
 .blueprint-grid{
   position:absolute;inset:0;
