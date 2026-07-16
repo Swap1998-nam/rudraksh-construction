@@ -60,38 +60,45 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <div class="eyebrow">Engineer Profile</div>
-        <h2>Lead Structural Engineer</h2>
+        <div class="eyebrow">Our Team</div>
+        <h2>Engineers &amp; Staff</h2>
       </div>
     </div>
-    {% set lead = team_members | selectattr("is_lead") | first %}
-    <div class="eng-grid">
+    {% for member in team_members %}
+    <div class="eng-grid" style="margin-bottom:60px;">
       <div class="id-card reveal">
         <div class="avatar">
-          {% if lead and lead.image %}
-            <img src="{{ url_for('static', filename='uploads/' + lead.image) }}" alt="{{ lead.name }}" style="width:100%;height:100%;object-fit:cover;">
+          {% if member.image %}
+            <img src="{{ url_for('static', filename='uploads/' + member.image) }}" alt="{{ member.name }}" style="width:100%;height:100%;object-fit:cover;">
           {% else %}
-            <span>{{ lead.name[:1] if lead else 'R' }}</span>
+            <span>{{ member.name[:1] }}</span>
           {% endif %}
         </div>
-        <div class="eng-name">{{ lead.name if lead else 'Engineer Name' }}</div>
-        <div class="eng-title">{{ lead.title if lead else 'B.E. Civil · Structural Lead' }}</div>
-        <div class="id-line"><span>License No.</span><span>{{ lead.license_no if lead else 'PLACEHOLDER' }}</span></div>
-        <div class="id-line"><span>Experience</span><span>{{ lead.experience if lead else '12 Years' }}</span></div>
-        <div class="id-line"><span>Registered</span><span>{{ lead.registered_in if lead else 'Karnataka, IN' }}</span></div>
+        <div class="eng-name">{{ member.name }}</div>
+        <div class="eng-title">{{ member.title }}</div>
+        {% if member.license_no %}
+        <div class="id-line"><span>License No.</span><span>{{ member.license_no }}</span></div>
+        {% endif %}
+        {% if member.experience %}
+        <div class="id-line"><span>Experience</span><span>{{ member.experience }}</span></div>
+        {% endif %}
+        {% if member.registered_in %}
+        <div class="id-line"><span>Registered</span><span>{{ member.registered_in }}</span></div>
+        {% endif %}
       </div>
       <div class="eng-bio reveal">
-        <p>{{ lead.bio if lead else 'Placeholder biography — replace with your lead engineer\'s real background.' }}</p>
-        {% if lead and lead.credentials %}
+        <p>{{ member.bio }}</p>
+        {% if member.credentials %}
         <h3>Credentials</h3>
         <div class="cred-grid">
-          {% for cred in lead.credentials.split('\n') %}
+          {% for cred in member.credentials.split('\n') %}
             <div class="cred">{{ cred }}</div>
           {% endfor %}
         </div>
         {% endif %}
       </div>
     </div>
+    {% endfor %}
   </div>
 </section>
 
